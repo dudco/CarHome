@@ -1,6 +1,5 @@
-package kr.edcan.lumihana.carhome;
+package kr.edcan.lumihana.carhome.Activity;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import app.akexorcist.bluetotohspp.library.BluetoothSPP;
-import app.akexorcist.bluetotohspp.library.BluetoothState;
+import kr.edcan.lumihana.carhome.R;
 
 public class MainActivity extends AppCompatActivity {
     private BluetoothSPP bluetoothSPP;
@@ -19,6 +18,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        initBluetooth();
+    }
+
+    private void initBluetooth() {  //블루투스 설정
         bluetoothSPP = new BluetoothSPP(this);
         if (!bluetoothSPP.isBluetoothAvailable()) {   //블루투스 지원 확인
             Toast.makeText(getApplicationContext(), "블루투스가 지원되지 않습니다.", Toast.LENGTH_SHORT).show();
@@ -85,38 +88,39 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        bluetoothSPP.stopService();
+//        bluetoothSPP.stopService();
+//        bluetoothSPP = null;
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (!bluetoothSPP.isBluetoothEnabled()) bluetoothSPP.enable();
-        else {
-            if (!bluetoothSPP.isServiceAvailable()) {
-                bluetoothSPP.setupService();
-                bluetoothSPP.startService(BluetoothState.DEVICE_OTHER);
-                bluetoothSPP.autoConnect("HC-06");
-            }
-        }
+//        if (!bluetoothSPP.isBluetoothEnabled()) bluetoothSPP.enable();
+//        else {
+//            if (!bluetoothSPP.isServiceAvailable()) {
+//                bluetoothSPP.setupService();
+//                bluetoothSPP.startService(BluetoothState.DEVICE_OTHER);
+//                bluetoothSPP.autoConnect("HC-06");
+//            }
+//        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == BluetoothState.REQUEST_CONNECT_DEVICE) {
-            if (resultCode == Activity.RESULT_OK)
-                bluetoothSPP.connect(data);
-        } else if (requestCode == BluetoothState.REQUEST_ENABLE_BT) {
-            if (resultCode == Activity.RESULT_OK) {
-                bluetoothSPP.setupService();
-            } else {
-                Toast.makeText(getApplicationContext(), "블루투스를 켜주세요", Toast.LENGTH_SHORT).show();
-
-                bluetoothSPP = null;
-                finish();
-            }
-        }
+//        if (requestCode == BluetoothState.REQUEST_CONNECT_DEVICE) {
+//            if (resultCode == Activity.RESULT_OK)
+//                bluetoothSPP.connect(data);
+//        } else if (requestCode == BluetoothState.REQUEST_ENABLE_BT) {
+//            if (resultCode == Activity.RESULT_OK) {
+//                bluetoothSPP.setupService();
+//            } else {
+//                Toast.makeText(getApplicationContext(), "블루투스를 켜주세요", Toast.LENGTH_SHORT).show();
+//
+//                bluetoothSPP = null;
+//                finish();
+//            }
+//        }
     }
 }
 
