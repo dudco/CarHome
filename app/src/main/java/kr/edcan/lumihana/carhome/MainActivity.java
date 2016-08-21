@@ -12,7 +12,7 @@ import app.akexorcist.bluetotohspp.library.BluetoothSPP;
 import app.akexorcist.bluetotohspp.library.BluetoothState;
 
 public class MainActivity extends AppCompatActivity {
-    BluetoothSPP bluetoothSPP;
+    private BluetoothSPP bluetoothSPP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
