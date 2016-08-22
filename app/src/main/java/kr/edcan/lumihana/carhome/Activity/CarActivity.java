@@ -119,7 +119,7 @@ public class CarActivity extends AppCompatActivity {
                 super.run();
 
                 while (true) {
-                    weatherManager.getWeather("서울", "강남구", "삼성동");
+                    if(loopCount%60 == 0) weatherManager.getWeather("서울", "강남구", "삼성동");
                     outside = Float.parseFloat(sharedPreferences.getString("Temperature", "0.0f"));
                     if (defaultInside == 0.0f) defaultInside = outside;
                     if (insideTemp == 0.0f) insideTemp = defaultInside;
