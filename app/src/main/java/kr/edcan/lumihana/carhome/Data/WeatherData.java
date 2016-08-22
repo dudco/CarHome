@@ -1,5 +1,7 @@
 package kr.edcan.lumihana.carhome.Data;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -12,14 +14,27 @@ public class WeatherData {
      * code : 9200
      * requestUrl : /weather/current/minutely?village=도곡동&county=강남구&city=서울&version=1
      */
-
+    @SerializedName("result")
     private ResultBean result;
     /**
      * alertYn : Y
      * stormYn : Y
      */
 
+    @SerializedName("common")
     private CommonBean common;
+
+    public WeatherData(){
+
+    }
+
+    public WeatherData(ResultBean result, CommonBean common, WeatherBean weather) {
+        this.result = result;
+        this.common = common;
+        this.weather = weather;
+    }
+
+    @SerializedName("weather")
     private WeatherBean weather;
 
     public ResultBean getResult() {
@@ -47,8 +62,11 @@ public class WeatherData {
     }
 
     public static class ResultBean {
+        @SerializedName("message")
         private String message;
+        @SerializedName("code")
         private int code;
+        @SerializedName("requestUrl")
         private String requestUrl;
 
         public String getMessage() {
@@ -77,8 +95,15 @@ public class WeatherData {
     }
 
     public static class CommonBean {
+        @SerializedName("alertYn")
         private String alertYn;
+        @SerializedName("stormYn")
         private String stormYn;
+
+        public CommonBean(String alertYn, String stormYn) {
+            this.alertYn = alertYn;
+            this.stormYn = stormYn;
+        }
 
         public String getAlertYn() {
             return alertYn;
@@ -111,10 +136,15 @@ public class WeatherData {
          * timeObservation : 2016-08-21 23:50:00
          */
 
+        @SerializedName("minutely")
         private List<MinutelyBean> minutely;
 
         public List<MinutelyBean> getMinutely() {
             return minutely;
+        }
+
+        public WeatherBean(List<MinutelyBean> minutely) {
+            this.minutely = minutely;
         }
 
         public void setMinutely(List<MinutelyBean> minutely) {
@@ -122,6 +152,19 @@ public class WeatherData {
         }
 
         public static class MinutelyBean {
+            public MinutelyBean(StationBean station, WindBean wind, PrecipitationBean precipitation, SkyBean sky, RainBean rain, TemperatureBean temperature, String humidity, PressureBean pressure, String lightning, String timeObservation) {
+                this.station = station;
+                this.wind = wind;
+                this.precipitation = precipitation;
+                this.sky = sky;
+                this.rain = rain;
+                this.temperature = temperature;
+                this.humidity = humidity;
+                this.pressure = pressure;
+                this.lightning = lightning;
+                this.timeObservation = timeObservation;
+            }
+
             /**
              * name : 서초
              * id : 401
@@ -130,24 +173,27 @@ public class WeatherData {
              * longitude : 127.0156200000
              */
 
+
+
+            @SerializedName("station")
             private StationBean station;
             /**
              * wdir : 0.00
              * wspd : 0.00
              */
-
+            @SerializedName("wind")
             private WindBean wind;
             /**
              * type : 0
              * sinceOntime : 0.00
              */
-
+            @SerializedName("precipitation")
             private PrecipitationBean precipitation;
             /**
              * name : 구름많음
              * code : SKY_A03
              */
-
+            @SerializedName("sky")
             private SkyBean sky;
             /**
              * sinceOntime : 0.00
@@ -160,23 +206,26 @@ public class WeatherData {
              * last12hour : 0.00
              * last24hour : 0.00
              */
-
+            @SerializedName("rain")
             private RainBean rain;
             /**
              * tc : 30.10
              * tmax : 34.30
              * tmin : 26.10
              */
-
+            @SerializedName("temperature")
             private TemperatureBean temperature;
+            @SerializedName("humidity")
             private String humidity;
             /**
              * surface :
              * seaLevel :
              */
-
+            @SerializedName("pressure")
             private PressureBean pressure;
+            @SerializedName("lightning")
             private String lightning;
+            @SerializedName("timeObservation")
             private String timeObservation;
 
             public StationBean getStation() {
@@ -260,11 +309,24 @@ public class WeatherData {
             }
 
             public static class StationBean {
+                @SerializedName("name")
                 private String name;
+                @SerializedName("id")
                 private String id;
+                @SerializedName("type")
                 private String type;
+                @SerializedName("latitude")
                 private String latitude;
+                @SerializedName("longitude")
                 private String longitude;
+
+                public StationBean(String name, String id, String type, String latitude, String longitude) {
+                    this.name = name;
+                    this.id = id;
+                    this.type = type;
+                    this.latitude = latitude;
+                    this.longitude = longitude;
+                }
 
                 public String getName() {
                     return name;
@@ -308,8 +370,15 @@ public class WeatherData {
             }
 
             public static class WindBean {
+                @SerializedName("wdir")
                 private String wdir;
+                @SerializedName("wspd")
                 private String wspd;
+
+                public WindBean(String wdir, String wspd) {
+                    this.wdir = wdir;
+                    this.wspd = wspd;
+                }
 
                 public String getWdir() {
                     return wdir;
@@ -329,8 +398,15 @@ public class WeatherData {
             }
 
             public static class PrecipitationBean {
+                @SerializedName("type")
                 private String type;
+                @SerializedName("sinceOntime")
                 private String sinceOntime;
+
+                public PrecipitationBean(String type, String sinceOntime) {
+                    this.type = type;
+                    this.sinceOntime = sinceOntime;
+                }
 
                 public String getType() {
                     return type;
@@ -350,8 +426,15 @@ public class WeatherData {
             }
 
             public static class SkyBean {
+                @SerializedName("name")
                 private String name;
+                @SerializedName("code")
                 private String code;
+
+                public SkyBean(String name, String code) {
+                    this.name = name;
+                    this.code = code;
+                }
 
                 public String getName() {
                     return name;
@@ -371,15 +454,36 @@ public class WeatherData {
             }
 
             public static class RainBean {
+                @SerializedName("sinceOntime")
                 private String sinceOntime;
+                @SerializedName("sinceMidnight")
                 private String sinceMidnight;
+                @SerializedName("last10min")
                 private String last10min;
+                @SerializedName("last15min")
                 private String last15min;
+                @SerializedName("last30min")
                 private String last30min;
+                @SerializedName("last1hour")
                 private String last1hour;
+                @SerializedName("last6hour")
                 private String last6hour;
+                @SerializedName("last12hour")
                 private String last12hour;
+                @SerializedName("last24hour")
                 private String last24hour;
+
+                public RainBean(String sinceOntime, String sinceMidnight, String last10min, String last15min, String last30min, String last1hour, String last6hour, String last12hour, String last24hour) {
+                    this.sinceOntime = sinceOntime;
+                    this.sinceMidnight = sinceMidnight;
+                    this.last10min = last10min;
+                    this.last15min = last15min;
+                    this.last30min = last30min;
+                    this.last1hour = last1hour;
+                    this.last6hour = last6hour;
+                    this.last12hour = last12hour;
+                    this.last24hour = last24hour;
+                }
 
                 public String getSinceOntime() {
                     return sinceOntime;
@@ -455,9 +559,18 @@ public class WeatherData {
             }
 
             public static class TemperatureBean {
+                @SerializedName("tc")
                 private String tc;
+                @SerializedName("tmax")
                 private String tmax;
+                @SerializedName("tmin")
                 private String tmin;
+
+                public TemperatureBean(String tc, String tmax, String tmin) {
+                    this.tc = tc;
+                    this.tmax = tmax;
+                    this.tmin = tmin;
+                }
 
                 public String getTc() {
                     return tc;
@@ -485,8 +598,15 @@ public class WeatherData {
             }
 
             public static class PressureBean {
+                @SerializedName("surface")
                 private String surface;
+                @SerializedName("seaLevel")
                 private String seaLevel;
+
+                public PressureBean(String surface, String seaLevel) {
+                    this.surface = surface;
+                    this.seaLevel = seaLevel;
+                }
 
                 public String getSurface() {
                     return surface;
