@@ -72,7 +72,9 @@ public class WeatherManager {
             public void onResponse(Response<WeatherData> response, Retrofit retrofit) {
                 if(response.code() == 200){
                     weatherData = response.body();
-                    editor.putString("Temperature", weatherData.getWeather().getMinutely().get(0).getTemperature().getTc());
+                    String temp = weatherData.getWeather().getMinutely().get(0).getTemperature().getTc();
+                    if(temp==null) temp = "0.0f";
+                    editor.putString("Temperature", temp);
                     editor.commit();
                 }
             }
