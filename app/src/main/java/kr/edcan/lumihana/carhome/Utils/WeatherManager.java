@@ -73,7 +73,7 @@ public class WeatherManager {
                 if(response.code() == 200){
                     weatherData = response.body();
                     String temp = weatherData.getWeather().getMinutely().get(0).getTemperature().getTc();
-                    if(temp==null) temp = "0.0f";
+                    if(temp.equals("")) temp = null;
                     editor.putString("Temperature", temp);
                     editor.commit();
                 }
