@@ -10,11 +10,18 @@ String b;
 int toDeg = 25;
 int nowDeg = 25;
 
+bool isGas = false;
+bool isElect = false;
+
 //T = 84 F = 70
 
 void setup() {
-  pinMode(4, OUTPUT);
+  pinMode(5, INPUT); //Gas
+  pinMode(6, INPUT); //Elect
 
+  pinMode(8, OUTPUT); //Elect
+  pinMode(9, OUTPUT); //Gas
+  
   pinMode(IRledPin, OUTPUT);
   
   Serial.begin(9600);
@@ -25,22 +32,57 @@ void setup() {
 }
 
 void loop() {
-  digitalWrite(4, HIGH);
-  
+   if(digitalRead(5) == HIGH){
+    isGas = !isGas;
+    if(isGas){
+      mySerial.println("G1");
+    }else{
+      mySerial.println("G0");
+    }
+    delay(500);
+   }
+   if(digitalRead(6) == HIGH){
+    isElect = !isElect;
+    if(isElect){
+      mySerial.println("E1");
+    }else{
+      mySerial.println("E0");
+    }
+    delay(500);
+   }
+   if(isGas){
+     digitalWrite(8, HIGH);
+   }else{
+    digitalWrite(8, LOW);
+   }
+   if(isElect){
+    digitalWrite(9, HIGH);
+   }else{
+    digitalWrite(9, LOW);
+   }
+   
    if(mySerial.available()){
 //    Serial.write(mySerial.read());
     deg = mySerial.read();
 //    Serial.println(deg);
-    if(deg == 'T' || deg == 'F'){
+    if(deg == 'T' || deg == 'F' || deg == 'E' || deg == 'G'){
       if(deg == 'T'){
         TurnOn();
         isWork = true;
         Serial.println("ON");
-      }else{
+      }else if (deg == 'F'){
         TurnOff();
         isWork = false;
         Serial.println("Off");
         nowDeg = 25;
+      }else if(deg == 'E'){
+        Serial.println("E");
+        isElect = false;
+      }else if(deg == 'G'){
+        Serial.println("G");
+        isGas = false;
+      }else{
+        
       }
     }else{
       a = String(deg);
@@ -61,24 +103,25 @@ void loop() {
    if(Serial.available()){
     mySerial.write(Serial.read());
    }
+   
    if(isWork){
       if(nowDeg > toDeg){
-    TempDown();
-    nowDeg--;
-    Serial.print("Now Degree : ");
-    Serial.print(nowDeg);
-    Serial.print("      To Degree : ");
-    Serial.println(toDeg);
-    delay(1000);
-   }else if(nowDeg < toDeg){
-    TempUp();
-    nowDeg++;
-    Serial.print("Now Degree : ");
-    Serial.print(nowDeg);
-    Serial.print("      To Degree : ");
-    Serial.println(toDeg);
-    delay(1000);
-   }
+        TempDown();
+        nowDeg--;
+        Serial.print("Now Degree : ");
+        Serial.print(nowDeg);
+        Serial.print("      To Degree : ");
+        Serial.println(toDeg);
+        delay(1000);
+      }else if(nowDeg < toDeg){
+        TempUp();
+        nowDeg++;
+        Serial.print("Now Degree : ");
+        Serial.print(nowDeg);
+        Serial.print("      To Degree : ");
+        Serial.println(toDeg);
+        delay(1000);
+      }
    }
 }
 
