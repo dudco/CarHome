@@ -107,10 +107,12 @@
                     android:textSize="16dp" />
 
                 <View
+                    android:id="@+id/home_view_temp"
                     android:layout_width="match_parent"
                     android:layout_height="6dp"
                     android:layout_alignParentBottom="true"
-                    android:background="@drawable/background_bar" />
+                    android:background="@drawable/background_bar"
+                    android:visibility="visible" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -127,6 +129,14 @@
                     android:text="스마트 비지트"
                     android:textColor="@android:color/white"
                     android:textSize="16dp" />
+
+                <View
+                    android:id="@+id/home_view_visit"
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/background_bar"
+                    android:visibility="invisible" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -143,15 +153,118 @@
                     android:text="보안"
                     android:textColor="@android:color/white"
                     android:textSize="16dp" />
+
+                <View
+                    android:id="@+id/home_view_security"
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/background_bar"
+                    android:visibility="invisible" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/home_linear_security"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_weight="6"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="전기"
+                android:textColor="@android:color/black"
+                android:textSize="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/home_text_elec"
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight="1"
+                    android:background="@drawable/ripple_toggle_button_off"
+                    android:gravity="center"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="32dp"
+                    android:paddingRight="32dp"
+                    android:paddingTop="4dp"
+                    android:text="off"
+                    android:textColor="@android:color/white"
+                    android:textSize="16dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="가스"
+                android:textColor="@android:color/black"
+                android:textSize="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/home_text_gas"
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight="1"
+                    android:background="@drawable/ripple_toggle_button_off"
+                    android:gravity="center"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="32dp"
+                    android:paddingRight="32dp"
+                    android:paddingTop="4dp"
+                    android:text="off"
+                    android:textColor="@android:color/white"
+                    android:textSize="16dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/home_linear_temp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_weight="6"
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/home_image_status"

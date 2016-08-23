@@ -20,8 +20,9 @@ public class CarActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private Thread carThread;
 
+    private boolean isTurn = false;
     private TextView text_out, text_in, text_air;
-    private Button button_up, button_down, button_power, button_onoff;
+    private Button button_engine, button_up, button_down, button_power, button_onoff;
     private static final float defaultTemp = 26.0f;
     private float defaultInside = 0.0f;
     private boolean airPower = false;
@@ -44,17 +45,31 @@ public class CarActivity extends AppCompatActivity {
         button_down = (Button) findViewById(R.id.car_button_down);
         button_power = (Button) findViewById(R.id.car_button_power);
         button_onoff = (Button) findViewById(R.id.car_button_onoff);
+        button_engine = (Button) findViewById(R.id.car_button_engine);
 
         weatherManager = new WeatherManager(getApplicationContext(), WeatherManager.VERSION, "daa93524-10c6-34e8-b7ef-c0c702e65362");
         weatherManager.getWeather("서울", "강남구", "도곡동");
         shareManager = new ShareManager(getApplicationContext());
+
+        button_engine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isTurn){
+                    isTurn = false;
+                    shareManager.turnOff();
+                }else{
+                    isTurn = true;
+                    shareManager.turnOn();
+                }
+            }
+        });
 
         button_onoff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isEnabled) {
                     isEnabled = false;
-                    button_onoff.setText("OFF");
+                    button_onoff.setText("SYNC OFF");
                     shareManager.setOff();
                 } else {
                     new AlertDialog.Builder(CarActivity.this)
@@ -65,7 +80,7 @@ public class CarActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                     isEnabled = true;
-                                    button_onoff.setText("ON");
+                                    button_onoff.setText("SYNC ON");
                                     shareManager.setOn();
                                 }
                             })

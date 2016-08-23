@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:vmSafeMode="true">
-        <activity android:name=".Activity.CarActivity"></activity>
+        <activity
+            android:name=".Activity.CarActivity"
+            android:screenOrientation="landscape"></activity>
         <activity android:name=".Activity.SelectActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -7,7 +7,9 @@ import android.util.Log;
 import com.squareup.okhttp.ResponseBody;
 
 import kr.edcan.lumihana.carhome.Data.OnOffData;
+import kr.edcan.lumihana.carhome.Data.SecurityData;
 import kr.edcan.lumihana.carhome.Data.TemperatureData;
+import kr.edcan.lumihana.carhome.Data.TurnData;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
@@ -22,6 +24,8 @@ public class ShareManager {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private Retrofit retrofit;
+    private Call<TurnData> shareTurnGet;
+    private Call<SecurityData> shareEGGet;
     private Call<TemperatureData> shareGet;
     private Call<OnOffData> shareOnOffGet;
     private Call<ResponseBody> shareSet;
@@ -130,6 +134,124 @@ public class ShareManager {
             public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
                 if (response.code() == 200) {
                     Log.e("ShareManager", "Successfully set");
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("ShareManager", "Failed to set temperature");
+                Log.e("ShareManager", t.getMessage() + "");
+            }
+        });
+    }
+
+    public void setData(boolean isGas, boolean isElect) {
+        shareSet = shareService.setData(isGas, isElect);
+        shareSet.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
+                if (response.code() == 200) {
+                    Log.e("ShareManager", "Successfully set");
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("ShareManager", "Failed to set temperature");
+                Log.e("ShareManager", t.getMessage() + "");
+            }
+        });
+    }
+
+    public void egUpdate(boolean isGas, boolean isElect) {
+        shareSet = shareService.egUpdate(isGas, isElect);
+        shareSet.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
+                if (response.code() == 200) {
+                    Log.e("ShareManager", "Successfully set");
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("ShareManager", "Failed to set temperature");
+                Log.e("ShareManager", t.getMessage() + "");
+            }
+        });
+    }
+
+    public void getEg() {
+        shareEGGet = shareService.getEg();
+        shareEGGet.enqueue(new Callback<SecurityData>() {
+            @Override
+            public void onResponse(Response<SecurityData> response, Retrofit retrofit) {
+                if (response.code() == 200) {
+                    boolean isGas = response.body().isGas();
+                    boolean isElect = response.body().isElect();
+
+                    editor.putBoolean("isGas", isGas);
+                    editor.putBoolean("isElect", isElect);
+                    editor.commit();
+                    Log.e("ShareManager", "Gas : " + isGas + ", Elect : " + isElect);
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("ShareManager", "Failed to set temperature");
+                Log.e("ShareManager", t.getMessage() + "");
+            }
+        });
+    }
+
+    public void turnOn() {
+        shareSet = shareService.turnOn();
+        shareSet.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
+                if (response.code() == 200) {
+                    Log.e("ShareManager", "Successfully turn on");
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("ShareManager", "Failed to set temperature");
+                Log.e("ShareManager", t.getMessage() + "");
+            }
+        });
+    }
+
+    public void turnOff() {
+        shareSet = shareService.turnOff();
+        shareSet.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
+                if (response.code() == 200) {
+                    Log.e("ShareManager", "Successfully turn off");
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("ShareManager", "Failed to set temperature");
+                Log.e("ShareManager", t.getMessage() + "");
+            }
+        });
+    }
+
+    public void getTurn() {
+        shareTurnGet = shareService.getTurn();
+        shareTurnGet.enqueue(new Callback<TurnData>() {
+            @Override
+            public void onResponse(Response<TurnData> response, Retrofit retrofit) {
+                if (response.code() == 200) {
+                    boolean temp = response.body().isTurn();
+
+                    editor.putBoolean("turn", temp);
+                    editor.commit();
+                    Log.e("ShareManager", "Turn : " + temp);
                 }
             }
 

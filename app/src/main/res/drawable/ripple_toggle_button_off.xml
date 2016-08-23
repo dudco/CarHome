@@ -1,0 +1,7 @@
+<ripple xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:targetApi="lollipop"
+    android:color="#FFF">
+
+    <item android:drawable="@drawable/background_toggle_button_off"/>
+</ripple>
